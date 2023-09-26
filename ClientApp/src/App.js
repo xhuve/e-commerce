@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Home from "./components/Home.js"
 
-export default class App extends Component {
-  static displayName = App.name;
 
-  render() {
-    return (
-        <div>Testing</div>
+function App() {
+  return (
+        <Home />
     );
   }
-}
+
+export default App
