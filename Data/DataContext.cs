@@ -21,13 +21,18 @@ namespace dotnet_ecommerce.Data
 
             modelBuilder.Entity<Order>()
             .HasOne(x => x.User)
-            .WithMany(x => x.Order)
+            .WithMany(x => x.orders)
             .HasForeignKey(x => x.user_id);
             
             modelBuilder.Entity<OrderItems>()
             .HasOne(x => x.Order)
             .WithMany(x => x.OrderList)
             .HasForeignKey(x => x.order_id);
+
+            modelBuilder.Entity<OrderItems>()
+            .HasMany(x => x.Products)
+            .WithOne(x => x.OrderList)
+            .HasForeignKey(x => x.order_list_id);
         }
 
         public DbSet<User> Users { get; set; }

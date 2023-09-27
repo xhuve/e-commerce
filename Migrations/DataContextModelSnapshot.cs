@@ -47,9 +47,6 @@ namespace dotnet_ecommerce.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("Productsproduct_id")
-                        .HasColumnType("int");
-
                     b.Property<int>("order_id")
                         .HasColumnType("int");
 
@@ -63,8 +60,6 @@ namespace dotnet_ecommerce.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("order_items_id");
-
-                    b.HasIndex("Productsproduct_id");
 
                     b.HasIndex("order_id");
 
@@ -85,10 +80,15 @@ namespace dotnet_ecommerce.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int>("order_list_id")
+                        .HasColumnType("int");
+
                     b.Property<float>("price")
                         .HasColumnType("float");
 
                     b.HasKey("product_id");
+
+                    b.HasIndex("order_list_id");
 
                     b.ToTable("Products");
                 });
@@ -118,7 +118,7 @@ namespace dotnet_ecommerce.Migrations
             modelBuilder.Entity("dotnet_ecommerce.Models.Order", b =>
                 {
                     b.HasOne("dotnet_ecommerce.Models.User", "User")
-                        .WithMany("Order")
+                        .WithMany("orders")
                         .HasForeignKey("user_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -128,12 +128,6 @@ namespace dotnet_ecommerce.Migrations
 
             modelBuilder.Entity("dotnet_ecommerce.Models.OrderItems", b =>
                 {
-                    b.HasOne("dotnet_ecommerce.Models.Product", "Products")
-                        .WithMany()
-                        .HasForeignKey("Productsproduct_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("dotnet_ecommerce.Models.Order", "Order")
                         .WithMany("OrderList")
                         .HasForeignKey("order_id")
@@ -141,8 +135,17 @@ namespace dotnet_ecommerce.Migrations
                         .IsRequired();
 
                     b.Navigation("Order");
+                });
 
-                    b.Navigation("Products");
+            modelBuilder.Entity("dotnet_ecommerce.Models.Product", b =>
+                {
+                    b.HasOne("dotnet_ecommerce.Models.OrderItems", "OrderList")
+                        .WithMany("Products")
+                        .HasForeignKey("order_list_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OrderList");
                 });
 
             modelBuilder.Entity("dotnet_ecommerce.Models.Order", b =>
@@ -150,9 +153,14 @@ namespace dotnet_ecommerce.Migrations
                     b.Navigation("OrderList");
                 });
 
+            modelBuilder.Entity("dotnet_ecommerce.Models.OrderItems", b =>
+                {
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("dotnet_ecommerce.Models.User", b =>
                 {
-                    b.Navigation("Order");
+                    b.Navigation("orders");
                 });
 #pragma warning restore 612, 618
         }
