@@ -7,7 +7,7 @@ namespace dotnet_ecommerce.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int user_id { get; set; }
+        public int id { get; set; }
         public string username { get; set; }
         public string password { get; set; }
         public string? first_name { get; set; }

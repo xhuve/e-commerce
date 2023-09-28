@@ -20,6 +20,8 @@ namespace dotnet_ecommerce.Controllers
             _db = db;
         }
 
+
+
         [HttpGet]
         public async Task<ActionResult<List<User>>> GetUsers()
         {
@@ -29,12 +31,13 @@ namespace dotnet_ecommerce.Controllers
         [HttpPost]
         public async Task<ActionResult<List<User>>> CreateUser(UserDTO req)
         {
+
             var newUser = new User()
+            
             {
                 username = req.username,
                 password = req.password,
                 first_name = req.first_name,
-                orders = new List<Order>()
             };
             _db.Users.Add(newUser);
             await _db.SaveChangesAsync();
