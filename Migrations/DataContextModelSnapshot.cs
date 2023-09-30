@@ -38,7 +38,7 @@ namespace dotnet_ecommerce.Migrations
 
                     b.HasIndex("user_id");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("dotnet_ecommerce.Models.OrderItems", b =>
@@ -63,7 +63,7 @@ namespace dotnet_ecommerce.Migrations
 
                     b.HasIndex("order_id");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("dotnet_ecommerce.Models.Product", b =>
@@ -90,7 +90,7 @@ namespace dotnet_ecommerce.Migrations
 
                     b.HasIndex("OrderListid");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("dotnet_ecommerce.Models.User", b =>
@@ -112,7 +112,7 @@ namespace dotnet_ecommerce.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("dotnet_ecommerce.Models.Order", b =>

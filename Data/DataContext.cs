@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using dotnet_ecommerce.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace dotnet_ecommerce.Data
@@ -32,6 +33,7 @@ namespace dotnet_ecommerce.Data
             modelBuilder.Entity<OrderItems>()
             .HasMany(x => x.Products)
             .WithOne(x => x.OrderList);
+
         }
 
         public DbSet<User> Users { get; set; }
