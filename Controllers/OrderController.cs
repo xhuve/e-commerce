@@ -26,15 +26,20 @@ namespace dotnet_ecommerce.Controllers
             return Ok(await _db.Orders.ToListAsync());
         }
 
+        public class OrderCreateRequest
+{
+            public OrderDTO Order { get; set; }
+            public User User { get; set; }
+        }
         [HttpPost]
-        public async Task<ActionResult<List<Order>>> CreateOrder(OrderDTO req, User user)
+        public async Task<ActionResult<List<Order>>> CreateOrder(OrderCreateRequest req)
         {
             var newOrder = new Order()
             {
-                status = req.status,
-                user_id = user.id,
-                total_value = req.total_value,
-                User = user,
+                status = req.Order.status,
+                user_id = req.User.id,
+                total_value = req.Order.total_value,
+                User = req.User,
                 OrderList = new List<OrderItems>()
             };
             _db.Orders.Add(newOrder);
