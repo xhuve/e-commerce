@@ -11,7 +11,7 @@ namespace dotnet_ecommerce.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int order_items_id {get; set;}
+        public int id {get; set;}
         public int order_id {get; set;}
         public int product_id {get; set;}
         public int quantity {get; set;}

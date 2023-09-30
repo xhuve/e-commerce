@@ -20,7 +20,7 @@ namespace dotnet_ecommerce.Migrations
 
             modelBuilder.Entity("dotnet_ecommerce.Models.Order", b =>
                 {
-                    b.Property<int>("order_id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -34,7 +34,7 @@ namespace dotnet_ecommerce.Migrations
                     b.Property<int>("user_id")
                         .HasColumnType("int");
 
-                    b.HasKey("order_id");
+                    b.HasKey("id");
 
                     b.HasIndex("user_id");
 
@@ -43,7 +43,7 @@ namespace dotnet_ecommerce.Migrations
 
             modelBuilder.Entity("dotnet_ecommerce.Models.OrderItems", b =>
                 {
-                    b.Property<int>("order_items_id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -59,17 +59,20 @@ namespace dotnet_ecommerce.Migrations
                     b.Property<float>("unit_price")
                         .HasColumnType("float");
 
-                    b.HasKey("order_items_id");
+                    b.HasKey("id");
 
                     b.HasIndex("order_id");
 
-                    b.ToTable("OrderList");
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("dotnet_ecommerce.Models.Product", b =>
                 {
-                    b.Property<int>("product_id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderListid")
                         .HasColumnType("int");
 
                     b.Property<string>("category")
@@ -80,22 +83,19 @@ namespace dotnet_ecommerce.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("order_list_id")
-                        .HasColumnType("int");
-
                     b.Property<float>("price")
                         .HasColumnType("float");
 
-                    b.HasKey("product_id");
+                    b.HasKey("id");
 
-                    b.HasIndex("order_list_id");
+                    b.HasIndex("OrderListid");
 
                     b.ToTable("Products");
                 });
 
             modelBuilder.Entity("dotnet_ecommerce.Models.User", b =>
                 {
-                    b.Property<int>("user_id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -110,7 +110,7 @@ namespace dotnet_ecommerce.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("user_id");
+                    b.HasKey("id");
 
                     b.ToTable("Users");
                 });
@@ -118,7 +118,7 @@ namespace dotnet_ecommerce.Migrations
             modelBuilder.Entity("dotnet_ecommerce.Models.Order", b =>
                 {
                     b.HasOne("dotnet_ecommerce.Models.User", "User")
-                        .WithMany("orders")
+                        .WithMany("Orders")
                         .HasForeignKey("user_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -141,7 +141,7 @@ namespace dotnet_ecommerce.Migrations
                 {
                     b.HasOne("dotnet_ecommerce.Models.OrderItems", "OrderList")
                         .WithMany("Products")
-                        .HasForeignKey("order_list_id")
+                        .HasForeignKey("OrderListid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -160,7 +160,7 @@ namespace dotnet_ecommerce.Migrations
 
             modelBuilder.Entity("dotnet_ecommerce.Models.User", b =>
                 {
-                    b.Navigation("orders");
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

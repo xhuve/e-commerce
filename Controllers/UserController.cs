@@ -20,8 +20,6 @@ namespace dotnet_ecommerce.Controllers
             _db = db;
         }
 
-
-
         [HttpGet]
         public async Task<ActionResult<List<User>>> GetUsers()
         {
@@ -31,9 +29,7 @@ namespace dotnet_ecommerce.Controllers
         [HttpPost]
         public async Task<ActionResult<List<User>>> CreateUser(UserDTO req)
         {
-
             var newUser = new User()
-            
             {
                 username = req.username,
                 password = req.password,
@@ -43,6 +39,15 @@ namespace dotnet_ecommerce.Controllers
             await _db.SaveChangesAsync();
 
             return Ok(newUser);
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult<User>> DeleteUser(User User)
+        {
+            var DelUser = _db.Users.Where(x => User.id == x.id);
+            _db.Users.Remove((User)DelUser);
+            await _db.SaveChangesAsync();
+            return Ok(DelUser);
         }
     }
 }

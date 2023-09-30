@@ -11,11 +11,11 @@ namespace dotnet_ecommerce.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int order_id { get; set; }
+        public int id { get; set; }
         public int user_id {get; set;}
         public string status {get; set;}
         public float total_value {get; set;}
-        public User user {get;set;}
+        public User User {get;set;}
         public ICollection<OrderItems> OrderList {get; set;} 
     }
 }

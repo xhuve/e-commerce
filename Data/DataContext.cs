@@ -21,7 +21,7 @@ namespace dotnet_ecommerce.Data
 
             modelBuilder.Entity<Order>()
             .HasOne(x => x.User)
-            .WithMany(x => x.orders)
+            .WithMany(x => x.Orders)
             .HasForeignKey(x => x.user_id);
             
             modelBuilder.Entity<OrderItems>()
@@ -31,13 +31,12 @@ namespace dotnet_ecommerce.Data
 
             modelBuilder.Entity<OrderItems>()
             .HasMany(x => x.Products)
-            .WithOne(x => x.OrderList)
-            .HasForeignKey(x => x.order_list_id);
+            .WithOne(x => x.OrderList);
         }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Order> Orders {get; set;}
         public DbSet<Product> Products {get; set;}
-        public DbSet<OrderItems> OrderList {get; set;}
+        public DbSet<OrderItems> OrderItems {get; set;}
     }
 }

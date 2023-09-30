@@ -1,6 +1,6 @@
-using dotnet_ecommerce.Data;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
+using dotnet_ecommerce.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

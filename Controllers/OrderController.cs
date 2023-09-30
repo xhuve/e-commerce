@@ -34,7 +34,7 @@ namespace dotnet_ecommerce.Controllers
                 status = req.status,
                 user_id = user.id,
                 total_value = req.total_value,
-                user = user,
+                User = user,
                 OrderList = new List<OrderItems>()
             };
             _db.Orders.Add(newOrder);
