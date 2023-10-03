@@ -12,7 +12,7 @@ namespace dotnet_ecommerce.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
-        public string name {get; set;}
+        public string name {get; set;}        
         public float price  {get; set;}
         public string category {get; set;}
         public OrderItems OrderList {get; set;}

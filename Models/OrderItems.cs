@@ -17,6 +17,7 @@ namespace dotnet_ecommerce.Models
         public int quantity {get; set;}
         public float unit_price {get; set;}
         public Order Order {get; set;}
+        
         public ICollection<Product> Products {get; set;}
     }
 }

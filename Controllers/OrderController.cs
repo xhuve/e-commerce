@@ -27,7 +27,7 @@ namespace dotnet_ecommerce.Controllers
         }
 
         public class OrderCreateRequest
-{
+        {
             public OrderDTO Order { get; set; }
             public User User { get; set; }
         }

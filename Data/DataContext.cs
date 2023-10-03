@@ -13,7 +13,7 @@ namespace dotnet_ecommerce.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseMySQL("server=localhost;database=Ecommerce;user=root;password=shadow!;");
+            optionsBuilder.UseMySQL("server=localhost;database=ecommerce;user=root;password=shadow!;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,7 +33,6 @@ namespace dotnet_ecommerce.Data
             modelBuilder.Entity<OrderItems>()
             .HasMany(x => x.Products)
             .WithOne(x => x.OrderList);
-
         }
 
         public DbSet<User> Users { get; set; }
