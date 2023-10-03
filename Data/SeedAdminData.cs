@@ -19,7 +19,7 @@ namespace dotnet_ecommerce.Data
             if(await roleManager.FindByNameAsync("Admin") == null){
                 await roleManager.CreateAsync(new IdentityRole("Admin"));
             }
-    
+
             if(await roleManager.FindByNameAsync("User") == null){
                 await roleManager.CreateAsync(new IdentityRole("User"));
             }

@@ -52,6 +52,7 @@ namespace dotnet_ecommerce.Migrations
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
+
             migrationBuilder.CreateTable(
                 name: "OrderItems",
                 columns: table => new
