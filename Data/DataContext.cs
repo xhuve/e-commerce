@@ -33,6 +33,7 @@ namespace dotnet_ecommerce.Data
             modelBuilder.Entity<OrderItems>()
             .HasMany(x => x.Products)
             .WithOne(x => x.OrderList);
+            
         }
 
         public DbSet<User> Users { get; set; }

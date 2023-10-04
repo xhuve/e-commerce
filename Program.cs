@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>();
 builder.Services.AddDbContext<DataContext>();
 
 var app = builder.Build();
@@ -41,16 +42,16 @@ app.MapControllerRoute(
 
 app.MapFallbackToFile("index.html");
 
-// using (var scope = app.Services.CreateScope()){
-//     var services = scope.ServiceProvider;
+using (var scope = app.Services.CreateScope()){
+    var services = scope.ServiceProvider;
 
-//     var context = services.GetRequiredService<DataContext>();
-//     context.Database.Migrate();
+    var context = services.GetRequiredService<DataContext>();
+    context.Database.Migrate();
 
-//     var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
-//     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-//     SeedAdminData.Initialize(context, userManager, roleManager).Wait();
-// }
+    SeedAdminData.Initialize(context, userManager, roleManager).Wait();
+}
 
 app.Run();
