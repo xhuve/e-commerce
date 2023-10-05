@@ -1,57 +1,38 @@
-global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
 using dotnet_ecommerce.Data;
+using dotnet_ecommerce.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-builder.Services.AddControllersWithViews();
-builder.Services.AddSwaggerGen();
-builder.Services.AddIdentity<IdentityUser, IdentityRole>();
-builder.Services.AddDbContext<DataContext>();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-    {
-        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-        app.UseHsts();
-        
-    } else {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
+using Microsoft.Extensions.Hosting;
 
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseRouting();
-
-
-app.UseSwaggerUI(options =>
+namespace dotnet_ecommerce
 {
-    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-});
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var host = CreateHostBuilder(args).Build();
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller}/{action=Index}/{id?}");
+                var db = services.GetRequiredService<DataContext>();
+                var userManager = services.GetRequiredService<UserManager<UserStore>>(); 
+                var roleManager = services.GetRequiredService<RoleManager<UserRole>>();
 
-app.MapFallbackToFile("index.html");
+                SeedAdminData.Initialize(db, userManager, roleManager).Wait(); 
+            }
 
-using (var scope = app.Services.CreateScope()){
-    var services = scope.ServiceProvider;
 
-    var context = services.GetRequiredService<DataContext>();
-    context.Database.Migrate();
+            host.Run();
+        }
 
-    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
-    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-
-    SeedAdminData.Initialize(context, userManager, roleManager).Wait();
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
+    }
 }
-
-app.Run();
