@@ -4,21 +4,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using dotnet_ecommerce.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace dotnet_ecommerce.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<Models.UserStore>
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseMySQL("server=localhost;database=ecommerce;user=root;password=shadow!;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<UserRole>().ToTable("UserRoles");
 
             modelBuilder.Entity<Order>()
             .HasOne(x => x.User)
@@ -36,6 +37,7 @@ namespace dotnet_ecommerce.Data
             
         }
 
+        public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Order> Orders {get; set;}
         public DbSet<Product> Products {get; set;}

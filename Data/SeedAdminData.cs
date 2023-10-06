@@ -27,8 +27,8 @@ namespace dotnet_ecommerce.Data
 
             if(await userManager.FindByEmailAsync("admin@admin.a") == null){
                 var user = new UserStore {
-                    username = "adminUser",
-                    email = "admin@admin.a",
+                    UserName = "adminUser",
+                    Email = "admin@admin.a",
                 };
 
                 var res = await userManager.CreateAsync(user, "admin123admin");

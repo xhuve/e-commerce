@@ -22,7 +22,10 @@ namespace dotnet_ecommerce
         {
             services.AddControllers();
             services.AddSwaggerGen();
-            services.AddDbContext<DataContext>();
+            services.AddDbContext<DataContext>(options => 
+            {
+                options.UseMySQL("server=localhost;database=ecommerce;user=root;password=shadow!;");
+            });
             services.AddIdentity<UserStore, UserRole>()
                 .AddEntityFrameworkStores<DataContext>()
                 .AddDefaultTokenProviders();
