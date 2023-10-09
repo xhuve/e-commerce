@@ -28,6 +28,8 @@ namespace dotnet_ecommerce
             });
             services.AddIdentity<UserStore, UserRole>()
                 .AddEntityFrameworkStores<DataContext>()
+                .AddUserManager<UserManager<UserStore>>()
+                .AddRoleManager<RoleManager<UserRole>>()
                 .AddDefaultTokenProviders();
             services.AddAuthorization();
             // Add your services, database contexts, authentication, and more here.

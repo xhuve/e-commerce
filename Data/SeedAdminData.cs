@@ -19,10 +19,12 @@ namespace dotnet_ecommerce.Data
 
             if(await roleManager.FindByNameAsync("Admin") == null){
                 await roleManager.CreateAsync(new UserRole{role = "Admin"});
+                Console.WriteLine("Adding Admin Role");
             }
 
             if(await roleManager.FindByNameAsync("User") == null){
                 await roleManager.CreateAsync(new UserRole{role = "User"});
+                Console.WriteLine("Adding User Role");
             }
 
             if(await userManager.FindByEmailAsync("admin@admin.a") == null){
@@ -35,6 +37,9 @@ namespace dotnet_ecommerce.Data
                 if(res.Succeeded){
                     await userManager.AddPasswordAsync(user, "admin123admin");
                     await userManager.AddToRoleAsync(user, "Admin");
+                    Console.WriteLine("Added the user stuff");
+                } else {
+                    Console.WriteLine("CreateAsync problem");
                 }
             }
         }
