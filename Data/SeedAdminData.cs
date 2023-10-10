@@ -16,13 +16,13 @@ namespace dotnet_ecommerce.Data
         {
             _db.Database.EnsureCreated();
 
-            if(await roleManager.RoleExistsAsync("Admin")){
-                await roleManager.CreateAsync(new UserRole{role = "Admin"});
+            if(await roleManager.FindByNameAsync("Admin") == null){
                 Console.WriteLine("Adding Admin Role");
+                await roleManager.CreateAsync(new UserRole{role = "Admin", Name = "Admin"});
             }
 
-            if(await roleManager.RoleExistsAsync("User")){
-                await roleManager.CreateAsync(new UserRole{role = "User`"});
+            if(await roleManager.FindByNameAsync("User") == null){
+                await roleManager.CreateAsync(new UserRole{role = "User", Name = "User"});
                 Console.WriteLine("Adding User Role");
             }
 
@@ -36,7 +36,7 @@ namespace dotnet_ecommerce.Data
 
                 var res = await userManager.CreateAsync(user, "Admin@123123");
                 if(res.Succeeded){
-                    await userManager.AddToRoleAsync(user, "Admin");
+                    await userManager.AddToRoleAsync(user, "ADMIN");
                     await userManager.AddPasswordAsync(user, "Admin@123123");
                     Console.WriteLine("Added the user stuff");
                 } else {
