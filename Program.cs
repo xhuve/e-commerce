@@ -23,8 +23,6 @@ namespace dotnet_ecommerce
 
                 SeedAdminData.Initialize(db, userManager, roleManager).Wait(); 
             }
-
-
             host.Run();
         }
 

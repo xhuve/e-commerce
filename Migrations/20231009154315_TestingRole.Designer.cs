@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dotnet_ecommerce.Data;
 
@@ -10,9 +11,11 @@ using dotnet_ecommerce.Data;
 namespace dotnet_ecommerce.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231009154315_TestingRole")]
+    partial class TestingRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,7 +172,7 @@ namespace dotnet_ecommerce.Migrations
 
                     b.HasIndex("user_id");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("dotnet_ecommerce.Models.OrderItems", b =>
@@ -194,7 +197,7 @@ namespace dotnet_ecommerce.Migrations
 
                     b.HasIndex("order_id");
 
-                    b.ToTable("OrderItems", (string)null);
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("dotnet_ecommerce.Models.Product", b =>
@@ -221,7 +224,7 @@ namespace dotnet_ecommerce.Migrations
 
                     b.HasIndex("OrderListid");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("dotnet_ecommerce.Models.User", b =>
@@ -243,7 +246,7 @@ namespace dotnet_ecommerce.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("dotnet_ecommerce.Models.UserStore", b =>
