@@ -31,7 +31,7 @@ namespace dotnet_ecommerce.Controllers
         }
 
         [HttpPost("CreateOrder")]
-        public async Task<ActionResult<List<Order>>> CreateOrder(Order order)
+        public async Task<ActionResult<List<Order>>> CreateOrder(OrderDTO order)
         {
             var newOrder = new Order()
             {
@@ -45,6 +45,5 @@ namespace dotnet_ecommerce.Controllers
 
             return Ok(newOrder);
         }
-
     }
 }

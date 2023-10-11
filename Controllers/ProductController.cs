@@ -42,5 +42,14 @@ namespace dotnet_ecommerce.Controllers
 
             return Ok(newProduct);
         }
+
+        [HttpDelete]
+        public async Task<ActionResult<Product>> DeleteProduct(Product Product)
+        {
+            var DelProduct = _db.Products.Where(x => Product.id == x.id);
+            _db.Products.Remove((Product)DelProduct);
+            await _db.SaveChangesAsync();
+            return Ok(DelProduct);
+        }
     }
 }
