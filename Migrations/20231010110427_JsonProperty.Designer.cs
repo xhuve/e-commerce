@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dotnet_ecommerce.Data;
 
@@ -10,9 +11,11 @@ using dotnet_ecommerce.Data;
 namespace dotnet_ecommerce.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231010110427_JsonProperty")]
+    partial class JsonProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -203,7 +206,7 @@ namespace dotnet_ecommerce.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("OrderListid")
+                    b.Property<int>("OrderListid")
                         .HasColumnType("int");
 
                     b.Property<string>("category")
@@ -406,7 +409,9 @@ namespace dotnet_ecommerce.Migrations
                 {
                     b.HasOne("dotnet_ecommerce.Models.OrderItems", "OrderList")
                         .WithMany("Products")
-                        .HasForeignKey("OrderListid");
+                        .HasForeignKey("OrderListid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("OrderList");
                 });

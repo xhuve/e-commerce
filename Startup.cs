@@ -1,3 +1,4 @@
+using System.Text.Json;
 using dotnet_ecommerce.Data;
 using dotnet_ecommerce.Models;
 using Microsoft.AspNetCore.Builder;
@@ -20,7 +21,12 @@ namespace dotnet_ecommerce
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                });
             services.AddSwaggerGen();
             services.AddDbContext<DataContext>(options => 
             {
@@ -32,7 +38,10 @@ namespace dotnet_ecommerce
                 .AddRoles<UserRole>()
                 .AddRoleManager<RoleManager<UserRole>>()
                 .AddDefaultTokenProviders();
-            services.AddAuthorization();
+            services.AddAuthorization(options => {
+                options.AddPolicy("RequireAdminRole", policy =>
+                policy.RequireRole("Admin"));
+            });
             // Add your services, database contexts, authentication, and more here.
         }
 
@@ -52,8 +61,8 @@ namespace dotnet_ecommerce
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

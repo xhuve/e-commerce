@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace dotnet_ecommerce.Models
 {
@@ -15,6 +16,7 @@ namespace dotnet_ecommerce.Models
         public string name {get; set;}        
         public float price  {get; set;}
         public string category {get; set;}
-        public OrderItems OrderList {get; set;}
+        [JsonProperty("OrderList")]
+        public OrderItems? OrderList {get; set;}
     }
 }

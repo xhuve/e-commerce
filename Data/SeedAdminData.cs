@@ -30,7 +30,7 @@ namespace dotnet_ecommerce.Data
                 var user = new UserStore {
                     user = "adminUser",
                     useremail = "admin@admin.a",
-                    UserName = "adminUser",
+                    UserName = "adminUser", 
                     Email = "admin@admin.a",
                 };
 

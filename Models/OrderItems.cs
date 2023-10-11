@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace dotnet_ecommerce.Models
 {
@@ -16,8 +17,8 @@ namespace dotnet_ecommerce.Models
         public int product_id {get; set;}
         public int quantity {get; set;}
         public float unit_price {get; set;}
-        public Order Order {get; set;}
-        
-        public ICollection<Product> Products {get; set;}
+        public Order? Order {get; set;}
+        [JsonProperty("allProducts")]
+        public ICollection<Product>? Products {get; set;}
     }
 }

@@ -10,6 +10,6 @@ namespace dotnet_ecommerce.DTO
     {
         public string status {get; set;}
         public float total_value {get; set;}
-        public User user {get;set;}
+        public int user_id {get;set;}
     }
 }

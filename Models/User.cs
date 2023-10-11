@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace dotnet_ecommerce.Models
 {
@@ -11,6 +12,7 @@ namespace dotnet_ecommerce.Models
         public string username { get; set; }
         public string password { get; set; }
         public string? first_name { get; set; }
-        public ICollection<Order> Orders {get; set;}
+        [JsonProperty("myOrders")]
+        public ICollection<Order>? Orders {get; set;}
     }
 }
