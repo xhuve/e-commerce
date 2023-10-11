@@ -1,6 +1,7 @@
 using System.Text.Json;
 using dotnet_ecommerce.Data;
 using dotnet_ecommerce.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -27,17 +28,24 @@ namespace dotnet_ecommerce
                     options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
                     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                 });
+            
             services.AddSwaggerGen();
+            
             services.AddDbContext<DataContext>(options => 
             {
                 options.UseMySQL("server=localhost;database=ecommerce;user=root;password=shadow!;");
             });
+
             services.AddIdentity<UserStore, UserRole>()
                 .AddEntityFrameworkStores<DataContext>()
                 .AddUserManager<UserManager<UserStore>>()
                 .AddRoles<UserRole>()
                 .AddRoleManager<RoleManager<UserRole>>()
                 .AddDefaultTokenProviders();
+            
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(o => o.LoginPath = "/account/login");
+        
             services.AddAuthorization(options => {
                 options.AddPolicy("RequireAdminRole", policy =>
                 policy.RequireRole("Admin"));

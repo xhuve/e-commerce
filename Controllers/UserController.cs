@@ -26,20 +26,7 @@ namespace dotnet_ecommerce.Controllers
             return Ok(await _db.Users.ToListAsync());
         }
 
-        [HttpPost]
-        public async Task<ActionResult<List<User>>> CreateUser(UserDTO req)
-        {
-            var newUser = new User()
-            {
-                username = req.username,
-                password = req.password,
-                first_name = req.first_name,
-            };
-            _db.Users.Add(newUser);
-            await _db.SaveChangesAsync();
-
-            return Ok(newUser);
-        }
+        
 
         [HttpDelete]
         public async Task<ActionResult<User>> DeleteUser(User User)

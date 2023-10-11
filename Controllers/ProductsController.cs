@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using dotnet_ecommerce.Data;
 using dotnet_ecommerce.DTO;
 using dotnet_ecommerce.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -13,22 +14,24 @@ namespace dotnet_ecommerce.Controllers
 {
     [ApiController]
     [Route("/api/[controller]")]
-    public class ProductController : ControllerBase
+    public class ProductsController : ControllerBase
     {
         private readonly DataContext _db;
 
-        public ProductController(DataContext db){
+
+        public ProductsController(DataContext db){
             _db = db;
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<Product>>> GetProducts()
         {
             return Ok(await _db.Products.ToListAsync());
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Product>>> CreateProduct(ProductDTO req)
+        public async Task<ActionResult<Product>> CreateProduct(ProductDTO req)
         {
 
             var newProduct = new Product()
