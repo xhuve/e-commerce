@@ -17,8 +17,8 @@ namespace dotnet_ecommerce.Controllers
     public class LoginController : ControllerBase
     {
         private readonly DataContext _db;
-        private readonly SignInManager<User> _signinManager;
-        public LoginController(DataContext db, SignInManager<User> signInManager){
+        private readonly SignInManager<UserStore> _signinManager;
+        public LoginController(DataContext db, SignInManager<UserStore> signInManager){
             _db = db;
             _signinManager = signInManager;
         }
@@ -31,9 +31,9 @@ namespace dotnet_ecommerce.Controllers
                 Console.WriteLine("Signed in yeeee");
             }
             if (result.IsLockedOut){
-                Console.WriteLine("Locked out :()");
+                Console.WriteLine("Locked out :(");
             }
-            return Ok();
+            return Ok(result);
         }
 
         

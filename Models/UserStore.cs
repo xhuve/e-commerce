@@ -9,6 +9,6 @@ namespace dotnet_ecommerce.Models
     public class UserStore : IdentityUser
     {
         public string user {get; set;}
-        public string useremail {get; set;}
+        
     }
 }

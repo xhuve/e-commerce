@@ -53,7 +53,7 @@ namespace dotnet_ecommerce.Controllers
         [HttpDelete]
         public async Task<ActionResult<User>> DeleteOrderitem(OrderItems Orderitems)
         {
-            var DelOrder = _db.Users.Where(x => Orderitems.id == x.id);
+            var DelOrder = _db.OrderItems.Where(x => Orderitems.id == x.id);
             _db.OrderItems.Remove((OrderItems)DelOrder);
             await _db.SaveChangesAsync();
             return Ok(DelOrder);

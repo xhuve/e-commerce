@@ -11,8 +11,8 @@ using dotnet_ecommerce.Data;
 namespace dotnet_ecommerce.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231009154315_TestingRole")]
-    partial class TestingRole
+    [Migration("20231012120326_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -206,7 +206,7 @@ namespace dotnet_ecommerce.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("OrderListid")
+                    b.Property<int?>("OrderListid")
                         .HasColumnType("int");
 
                     b.Property<string>("category")
@@ -302,10 +302,6 @@ namespace dotnet_ecommerce.Migrations
                         .HasColumnType("varchar(256)");
 
                     b.Property<string>("user")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("useremail")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -409,9 +405,7 @@ namespace dotnet_ecommerce.Migrations
                 {
                     b.HasOne("dotnet_ecommerce.Models.OrderItems", "OrderList")
                         .WithMany("Products")
-                        .HasForeignKey("OrderListid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderListid");
 
                     b.Navigation("OrderList");
                 });
