@@ -27,15 +27,16 @@ namespace dotnet_ecommerce.Data
             }
 
             if(await userManager.FindByEmailAsync("admin@admin.a") == null){
-                var user = new UserStore {
+                var currUser = new UserStore {
+                    User = "adminUser",
                     UserName = "adminUser", 
                     Email = "admin@admin.a",
                 };
 
-                var res = await userManager.CreateAsync(user, "Admin@123123");
+                var res = await userManager.CreateAsync(currUser, "Admin@123123");
                 if(res.Succeeded){
-                    await userManager.AddToRoleAsync(user, "ADMIN");
-                    await userManager.AddPasswordAsync(user, "Admin@123123");
+                    await userManager.AddToRoleAsync(currUser, "ADMIN");
+                    await userManager.AddPasswordAsync(currUser, "Admin@123123");
                     Console.WriteLine("Added the user stuff");
                 } else {
                     Console.WriteLine("CreateAsync problem");

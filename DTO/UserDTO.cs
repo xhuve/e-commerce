@@ -10,5 +10,6 @@ namespace dotnet_ecommerce.DTO
         public string username { get; set; }
         public string password { get; set; }
         public string? first_name { get; set; }
+        public string email {get;set;}
     }
 }
