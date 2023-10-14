@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.Json;
 using dotnet_ecommerce.Data;
 using dotnet_ecommerce.Models;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 
 namespace dotnet_ecommerce
 {
@@ -33,7 +35,7 @@ namespace dotnet_ecommerce
             
             services.AddDbContext<DataContext>(options => 
             {
-                options.UseMySQL("server=localhost;database=ecommerce;user=root;password=shadow!;");
+                options.UseMySQL(Configuration["ConnectionStrings:DefaultConnectionString"]);
             });
 
             services.AddIdentity<UserStore, UserRole>()
@@ -45,11 +47,27 @@ namespace dotnet_ecommerce
                 .AddDefaultTokenProviders();
             
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(o => o.LoginPath = "/account/login");
+                .AddCookie(o => o.LoginPath = "/account/login")
+                .AddJwtBearer(x => 
+                {
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = Configuration["JwtSettings:Issuer"],
+                        ValidAudience = Configuration["JwtSettings:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtSettings:Key"])),
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true
+                    };
+                }
+                );
         
             services.AddAuthorization(options => {
                 options.AddPolicy("RequireAdminRole", policy =>
                 policy.RequireRole("Admin"));
+                options.AddPolicy("UserOnly", policy =>
+                policy.RequireRole("User"));
             });
             // Add your services, database contexts, authentication, and more here.
         }
@@ -71,7 +89,10 @@ namespace dotnet_ecommerce
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+
+            app.UseAuthentication();
             app.UseAuthorization();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

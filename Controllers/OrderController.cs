@@ -24,7 +24,7 @@ namespace dotnet_ecommerce.Controllers
         }
 
         [HttpGet("GetOrders")]
-        [Authorize(Policy = "RequireAdminRole")]
+        [Authorize(Policy = "UserOnly")]
         public async Task<ActionResult<List<Order>>> GetOrders() 
         {
             return Ok(await _db.Orders.ToListAsync());
