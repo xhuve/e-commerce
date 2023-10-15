@@ -19,6 +19,7 @@ namespace dotnet_ecommerce.Data
             if(await roleManager.FindByNameAsync("Admin") == null){
                 Console.WriteLine("Adding Admin Role");
                 await roleManager.CreateAsync(new UserRole{role = "Admin", Name = "Admin"});
+                SeedProducts.Populate(_db);
             }
 
             if(await roleManager.FindByNameAsync("User") == null){

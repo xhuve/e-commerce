@@ -21,7 +21,7 @@ namespace dotnet_ecommerce
                 var userManager = services.GetRequiredService<UserManager<UserStore>>(); 
                 var roleManager = services.GetRequiredService<RoleManager<UserRole>>();
 
-                SeedAdminData.Initialize(db, userManager, roleManager).Wait(); 
+                SeedAdminData.Initialize(db, userManager, roleManager).Wait();
             }
             host.Run();
         }
