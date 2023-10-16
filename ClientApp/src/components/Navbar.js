@@ -1,5 +1,6 @@
 import React from 'react'
 import logo from '../basic-logo.png'
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
@@ -8,12 +9,12 @@ function Navbar() {
             <img className=" w-16 h-16" src={logo} alt="Logo"></img>
         </div>
         <div className='flex justify-around my-auto'>
-            <button className="bg-blue-400 text-cyan-50 font-bold py-2 px-4 rounded">
+            <Link to="/signin" className="bg-blue-400 text-cyan-50 font-bold py-2 px-4 rounded">
                 Sign In
-            </button>
-            <button className="bg-blue-400 text-cyan-50 font-bold py-2 px-4 rounded mx-5">
+            </Link>
+            <Link to="/register" className="bg-blue-400 text-cyan-50 font-bold py-2 px-4 rounded mx-5">
                 Register
-            </button>
+            </Link>
         </div>
     </div>
   )
