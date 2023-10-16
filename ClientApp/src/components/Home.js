@@ -2,7 +2,7 @@ import React from 'react'
 
 function Home() {
   return (
-    <div>E commerce website</div>
+    <div className="">E commerce website</div>
   )
 }
 
