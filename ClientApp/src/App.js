@@ -8,14 +8,14 @@ import Register from './components/Register.js';
 
 function App() {
   return (
-      <>
+      <div className="min-h-screen">
         <Navbar />
         <Routes>
           <Route index element={<Home />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/register" element={<Register />} />
         </Routes>
-      </>
+      </div>
     );
   }
 
