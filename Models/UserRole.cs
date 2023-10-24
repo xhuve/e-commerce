@@ -9,5 +9,6 @@ namespace dotnet_ecommerce.Models
     public class UserRole : IdentityRole
     {
         public string role {get; set;}
+        
     }
 }

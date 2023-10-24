@@ -155,6 +155,9 @@ namespace dotnet_ecommerce.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("UserStoreId")
+                        .HasColumnType("varchar(255)");
+
                     b.Property<string>("status")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -167,9 +170,11 @@ namespace dotnet_ecommerce.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("UserStoreId");
+
                     b.HasIndex("user_id");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("dotnet_ecommerce.Models.OrderItems", b =>
@@ -194,7 +199,7 @@ namespace dotnet_ecommerce.Migrations
 
                     b.HasIndex("order_id");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("dotnet_ecommerce.Models.Product", b =>
@@ -221,7 +226,7 @@ namespace dotnet_ecommerce.Migrations
 
                     b.HasIndex("OrderListid");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("dotnet_ecommerce.Models.User", b =>
@@ -243,7 +248,7 @@ namespace dotnet_ecommerce.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("dotnet_ecommerce.Models.UserStore", b =>
@@ -294,13 +299,12 @@ namespace dotnet_ecommerce.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<string>("User")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
-
-                    b.Property<string>("user")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -378,6 +382,10 @@ namespace dotnet_ecommerce.Migrations
 
             modelBuilder.Entity("dotnet_ecommerce.Models.Order", b =>
                 {
+                    b.HasOne("dotnet_ecommerce.Models.UserStore", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("UserStoreId");
+
                     b.HasOne("dotnet_ecommerce.Models.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("user_id")
@@ -427,6 +435,11 @@ namespace dotnet_ecommerce.Migrations
                 });
 
             modelBuilder.Entity("dotnet_ecommerce.Models.User", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("dotnet_ecommerce.Models.UserStore", b =>
                 {
                     b.Navigation("Orders");
                 });

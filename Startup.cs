@@ -19,7 +19,6 @@ namespace dotnet_ecommerce
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
