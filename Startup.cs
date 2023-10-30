@@ -37,6 +37,12 @@ namespace dotnet_ecommerce
                 options.UseMySQL(Configuration["ConnectionStrings:DefaultConnectionString"]);
             });
 
+            services.Configure<IdentityOptions>(options => {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 4;
+                options.Password.RequireNonAlphanumeric = false;
+            });
+
             services.AddIdentity<UserStore, UserRole>()
                 .AddEntityFrameworkStores<DataContext>()
                 .AddSignInManager<SignInManager<UserStore>>()

@@ -51,7 +51,7 @@ namespace dotnet_ecommerce.Controllers
                         return Ok(newUser);
                     } else {
                     foreach(var test in added.Errors){
-                        Console.WriteLine(test.Code);
+                        Console.Write(test.Code + "");
                         Console.WriteLine(test.Description);
                     }
                     return BadRequest(newUser);

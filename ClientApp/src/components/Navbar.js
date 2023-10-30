@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
     return (
-    <div className='static flex justify-between align-middle border-solid border-b-4 border-sky-200 rounded-b-3xl bg-sky-300 p-1.5'>
+    <div className='static flex justify-between align-middle border-solid border-b-4 border-sky-200 bg-sky-300 p-1.5'>
         <div className='ml-3'>
             <img className=" w-16 h-16" src={logo} alt="Logo"></img>
         </div>
