@@ -46,12 +46,11 @@ namespace dotnet_ecommerce.Controllers
                     }; 
                     var added = await _userManager.CreateAsync(newUser, req.password);
                     if (added.Succeeded){
-                        Console.WriteLine("Adding Password");
                         await _userManager.AddToRoleAsync(newUser, "User");
                         return Ok(newUser);
                     } else {
                     foreach(var test in added.Errors){
-                        Console.Write(test.Code + "");
+                        Console.Write(test.Code + " ");
                         Console.WriteLine(test.Description);
                     }
                     return BadRequest(newUser);
@@ -91,7 +90,8 @@ namespace dotnet_ecommerce.Controllers
                     
                     throw;
                 }
-
+            } else {
+                Console.WriteLine("Not signed in for whatever reason.");
             }
             
             if (result.IsLockedOut){

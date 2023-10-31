@@ -9,7 +9,8 @@ function Register() {
         console.log(formData);
     }
 
-    const onSubmit = () => {
+    const onSubmit = (e) => {
+        e.preventDefault();
         axios.post("https://localhost:44462/account/CreateUser", formData)
         .then((response) => {
             console.log(response);
@@ -51,7 +52,7 @@ function Register() {
                         <input onChange={oninputChange} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="password" type="password" placeholder="******************" />
                         {/* <p class="text-red-500 text-xs italic">Please choose a password.</p> */}
                     </div>
-                    <div className="flex items-center justify-between">
+                    <div className="grid">
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                             Register
                         </button>
