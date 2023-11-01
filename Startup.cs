@@ -74,7 +74,6 @@ namespace dotnet_ecommerce
                 options.AddPolicy("UserOnly", policy =>
                 policy.RequireRole("User"));
             });
-            // Add your services, database contexts, authentication, and more here.
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -60,6 +60,16 @@ namespace dotnet_ecommerce.Controllers
             }
         }
 
+        [HttpGet("Logged")]
+        public IActionResult isLogged()
+        {
+            if (User.Identity.IsAuthenticated) {
+                return Ok(User.Identity.Name);
+            } else {
+                return BadRequest(false);
+            }
+        }
+
         [HttpPost("Login")]
         public async Task<ActionResult<UserDTO>> LoginAccount(UserDTO req)
         {
@@ -77,7 +87,7 @@ namespace dotnet_ecommerce.Controllers
                             new Claim(ClaimTypes.Name, req.first_name),
                             new Claim(ClaimTypes.Role, "User")
                         }),
-                        Expires = DateTime.UtcNow.AddHours(1), // Token expiration time
+                        Expires = DateTime.UtcNow.AddMinutes(5), // Token expiration time
                         SigningCredentials = new SigningCredentials
                         (new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                     };
