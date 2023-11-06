@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Org.BouncyCastle.Asn1.Cms;
 
 namespace dotnet_ecommerce.Controllers
 {
@@ -34,7 +35,7 @@ namespace dotnet_ecommerce.Controllers
 
 
         [HttpPost("CreateUser")]
-        public async Task<ActionResult<List<User>>> CreateUser(UserDTO req)
+        public async Task<ActionResult> CreateUser(UserDTO req)
         {
             if(await _userManager.FindByNameAsync(req.username) == null)
                 {
@@ -71,39 +72,36 @@ namespace dotnet_ecommerce.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<ActionResult<UserDTO>> LoginAccount(UserDTO req)
+        public async Task<ActionResult> LoginAccount(UserDTO req)
         {
             var result = await _signinManager.PasswordSignInAsync(req.username, req.password, true, false);
+
             if (result.Succeeded){
                 Console.WriteLine("Signed in yeeee");
-                try
+                
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]);
+
+
+                var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    var tokenHandler = new JwtSecurityTokenHandler();
-                    var key = Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]);
-                    
-                    var tokenDescriptor = new SecurityTokenDescriptor
-                    {
-                        Subject = new ClaimsIdentity(new[] {
-                            new Claim(ClaimTypes.Name, req.first_name),
-                            new Claim(ClaimTypes.Role, "User")
-                        }),
-                        Expires = DateTime.UtcNow.AddMinutes(5), // Token expiration time
-                        SigningCredentials = new SigningCredentials
-                        (new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                    };
-                    
-                    var token = tokenHandler.CreateToken(tokenDescriptor);
-                    Console.WriteLine(token);    
-                }
-                catch (System.Exception)
-                {
-                    
-                    throw;
-                }
+                    Subject = new ClaimsIdentity(new[] {
+                        new Claim(ClaimTypes.Name, req.first_name),
+                        new Claim(ClaimTypes.Role, "User")
+                    }),
+                    Expires = DateTime.UtcNow.AddMinutes(5),
+                    SigningCredentials = new SigningCredentials
+                    (new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                };
+                
+                Console.WriteLine(tokenDescriptor.Expires.ToString());
+
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                Console.WriteLine(token);
             } else {
                 Console.WriteLine("Not signed in for whatever reason.");
+                return BadRequest("Not signed in for whatever reason.");
             }
-            
             if (result.IsLockedOut){
                 Console.WriteLine("Locked out :(");
             }

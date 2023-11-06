@@ -5,6 +5,7 @@ import Navbar from './components/Navbar.js';
 import { Route, Routes } from 'react-router-dom';
 import SignIn from './components/SignIn.js';
 import Register from './components/Register.js';
+import Products from './components/Products.js';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/products" element={<Products />} />
         </Routes>
       </div>
     );

@@ -20,10 +20,10 @@ function Products() {
     }, [])
   
     return (
-      <div className='mt-8 flex flex-row flex-wrap gap-5 mx-16'>  
+      <div className='mt-4 flex flex-row flex-wrap gap-5 justify-center'>  
         {logged ? responseData.map((x) => {
           return (
-          <div><Card pName={x.name} price={x.price} /></div>
+          <Card pName={x.name} price={x.price} />
           )
         }) : <div>{responseData.code + ": Products not available"}</div>}
       </div>

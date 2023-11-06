@@ -33,7 +33,6 @@ namespace dotnet_ecommerce.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> CreateProduct(ProductDTO req)
         {
-
             var newProduct = new Product()
             {
                 name = req.name,

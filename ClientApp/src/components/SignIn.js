@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
     const [formData, setFormData] = useState({});
+    const nav = useNavigate();
 
     const oninputChange = (event) => {
       console.log(formData);
@@ -14,6 +16,7 @@ function SignIn() {
         axios.post("https://localhost:44462/account/Login", formData)
         .then((response) => {
             console.log(response);
+            nav("/")
         })
         .catch((error) => {
             console.log(error);

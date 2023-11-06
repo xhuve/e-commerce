@@ -15,6 +15,7 @@ function Navbar() {
         })
         .catch((err) => {
             console.log(err);
+            setLogData(false)
         })
     }, [])
 

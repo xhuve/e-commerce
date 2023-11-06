@@ -52,7 +52,10 @@ namespace dotnet_ecommerce
                 .AddDefaultTokenProviders();
             
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(o => o.LoginPath = "/account/login")
+                .AddCookie(o => {
+                    o.LoginPath = "/account/login";
+                    o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+                })
                 .AddJwtBearer(x => 
                 {
                     x.TokenValidationParameters = new TokenValidationParameters
@@ -63,7 +66,8 @@ namespace dotnet_ecommerce
                         ValidateIssuer = true,
                         ValidateAudience = true,
                         ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true
+                        ValidateIssuerSigningKey = true,
+                        ClockSkew = TimeSpan.Zero
                     };
                 }
                 );
