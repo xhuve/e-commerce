@@ -20,12 +20,17 @@ function Products() {
     }, [])
   
     return (
-      <div className='mt-8 flex flex-row flex-wrap gap-5 mx-16'>  
+      <div>
+        <div className='bg-cyan-200 h-64'> 
+        Test
+        </div>
+      <div className='mt-8 flex flex-row flex-wrap justify-center gap-5 mx-16'>  
         {logged ? responseData.map((x) => {
           return (
-          <div><Card pName={x.name} price={x.price} /></div>
-          )
-        }) : <div>{responseData.code + ": Products not available"}</div>}
+            <div><Card pName={x.name} price={x.price} /></div>
+            )
+          }) : <div>{responseData.code + ": Products not available"}</div>}
+      </div>
       </div>
     )
 }
